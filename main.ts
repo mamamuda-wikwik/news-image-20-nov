@@ -33,9 +33,10 @@ function die(msg: string): never {
 }
 
 function run(): void {
-  // The grader passes no arguments; a directory given on the command line
-  // still wins over the default.
-  const outDir = process.argv[2] ?? "/output";
+  // The grader passes no arguments and mounts the output at /output; it
+  // also sets MAKEFUN_OUTPUT_DIR=/output in the environment. A directory
+  // given on the command line wins, then the environment, then /output.
+  const outDir = process.argv[2] ?? process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 
   // entry.png lives beside this file. import.meta.url is the only location
   // that is reliable under Node's TypeScript stripping.
